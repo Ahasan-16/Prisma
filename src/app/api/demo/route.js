@@ -3,28 +3,22 @@ import { PrismaClient } from '/src/generated/prisma'
 
 export async function POST(req, res) {
     try{
-        let prisma=new PrismaClient();
-        let result=await prisma.User.create({
-            data:{
-                email:"ahasan2@gmail.com",
-                password:"123456",
-                profile:{
-                    create:{
-                        firstName:"Mohammad2",
-                        lastName:"Ahasan2",
-                        mobile:"0170000000",
-                        city:"chattogram2",
+        const {searchParams} = new URL(req.url);
+        let id=parseInt(searchParams.get("id"));
+        // let reqbody=await req.json(); postman teke data niye o update korte pari sei ketre data:reqbody
 
-                    }
-                },
-                post:{
-                    create:{
-                        title:"new",
-                        description:"new post",
-                    }
-                }
+        const prisma = new PrismaClient();
+        const result=await prisma.Employee.update({
+            where: {id:id},
+            data:{
+                name:"MohammdAhasan1",
+                designation:"MohammdAhasan3",
+                city:"chat",
+
             }
         })
+
+
        return NextResponse.json({status:200, data:result});
     }
     catch (e) {
