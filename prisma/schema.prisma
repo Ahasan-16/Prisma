@@ -83,3 +83,12 @@ model Comment{
   postId Int
   Post Post @relation(fields: [postId],references: [id],onDelete: Restrict,onUpdate: Cascade)
 }
+
+
+model Employee{
+id Int @id @default(autoincrement())
+name String
+designation String
+city String
+salary Int
+}
