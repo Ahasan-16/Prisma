@@ -13,7 +13,7 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-model User{
+model Uuser{
   id Int @id @default(autoincrement())
   email String @unique
   name String? @default("Ahasan") //? dea mane null value grohonjoggo
@@ -38,4 +38,48 @@ model AnotherModel{
   isBirth Boolean @default(true)
   picture Bytes @db.LongBlob
   binary Bytes @db.Binary(50)
+}
+
+model User{
+  id Int @id @default(autoincrement())
+  email String @unique
+  password String
+  profile Profile?
+  post Post[]
+  comment Comment[]
+  
+}
+//user er sate Profile er somporko one to one
+model Profile{
+  id Int @id @default(autoincrement())
+  firstName String
+  lastName String
+  mobile String
+  city String
+  userId Int @unique
+  User User @relation(fields: [userId],references: [id],onDelete: Restrict,onUpdate: Cascade)
+
+}
+
+//user er sate Post er somporko one to many
+model Post{
+  id Int @id @default(autoincrement())
+  title String
+  description String
+  userId Int @unique
+  User User @relation(fields: [userId],references: [id],onDelete: Restrict,onUpdate: Cascade)
+
+  comment Comment[]
+}
+
+//many to many
+
+model Comment{
+  id Int @id @default(autoincrement())
+  text String
+  userId Int @unique
+  User User @relation(fields: [userId],references: [id],onDelete: Restrict,onUpdate: Cascade)
+
+  postId Int
+  Post Post @relation(fields: [postId],references: [id],onDelete: Restrict,onUpdate: Cascade)
 }
