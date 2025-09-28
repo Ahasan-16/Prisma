@@ -6,7 +6,12 @@ export async function POST(req, res) {
        const reqbody= await req.json();
        const prisma=new PrismaClient();
       let result= await prisma.Employee.create({
-           data:reqbody
+           data:{
+               name:"Mohammad Ahasan3",
+               designation:"Engineer3",
+               city:"Chattogram3",
+               salary:12345
+           }
        })
        return NextResponse.json({status:200, data:result});
     }
